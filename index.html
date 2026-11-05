@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081a36"><link rel="manifest" href="./manifest.webmanifest">
+<title>ZARA — Office Accounts</title>
+<style>
+:root{--navy:#081a36;--navy2:#102b52;--gold:#e8b84d;--bg:#f3f6fb;--ink:#18243a;--muted:#718096;--line:#e7ecf3;--green:#159765;--red:#df4c5b;--blue:#2868e8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink)}
+header{background:linear-gradient(120deg,var(--navy),#123565);color:white;padding:22px max(18px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}.mark{width:48px;height:48px;border:1px solid #d8aa43;border-radius:14px;display:grid;place-items:center;color:var(--gold);font-weight:900;font-size:30px;box-shadow:inset 0 0 18px #ffffff12}.brand h1{font-size:23px;letter-spacing:3px;margin:0}.brand small{color:#c7d4e7;display:block;font-size:11px;letter-spacing:1.5px}
+.header-right{font-size:12px;color:#d8e2f0;text-align:right}
+.wrap{max-width:1180px;margin:24px auto;padding:0 18px}.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}.topline h2{margin:0;font-size:23px}.sub{color:var(--muted);font-size:13px;margin-top:4px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}button,.filebtn{border:0;border-radius:10px;padding:10px 14px;font-weight:650;cursor:pointer;font-size:13px}.primary{background:var(--blue);color:white}.dark{background:var(--navy);color:white}.light{background:white;border:1px solid var(--line);color:var(--ink)}.gold{background:var(--gold);color:#1b2638}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 5px 18px #102b5208}.card .label{font-size:12px;color:var(--muted)}.amount{font-size:25px;font-weight:800;margin-top:8px;letter-spacing:-.5px}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}.tab{background:#eef2f8;color:#536178}.tab.active{background:var(--navy);color:white}
+.grid2{display:grid;grid-template-columns:1.05fr 1.5fr;gap:16px}.section-title{font-weight:750;margin:0 0 14px;font-size:16px}
+form{display:grid;gap:10px}label{font-size:12px;color:#5d6b80;font-weight:650}input,select,textarea{width:100%;padding:11px 12px;border:1px solid #dce3ed;border-radius:9px;font:inherit;background:white;color:var(--ink)}input:focus,select:focus,textarea:focus{outline:2px solid #b8ceff;border-color:var(--blue)}.field{display:grid;gap:5px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:10px 8px;border-bottom:1px solid var(--line)}td{padding:12px 8px;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}.right{text-align:right}.pill{padding:4px 8px;border-radius:30px;font-size:11px;font-weight:700;background:#edf7f2;color:var(--green)}.pill.debit{background:#fff0f1;color:var(--red)}
+.empty{text-align:center;color:var(--muted);padding:28px}.smallbtn{padding:6px 9px;font-size:11px}.muted{color:var(--muted)}.hidden{display:none!important}.notice{background:#fff8e8;border:1px solid #f4dfad;color:#73551b;padding:12px 14px;border-radius:12px;font-size:12px;line-height:1.5;margin-top:14px}
+footer{text-align:center;color:#8994a5;font-size:11px;padding:20px}
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+@media(max-width:480px){.cards{gap:9px}.card{padding:13px}.amount{font-size:20px}.wrap{padding:0 12px}.panel{padding:14px}header{padding:16px 14px}.header-right{display:none}table{font-size:12px}.hide-mobile{display:none}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="mark">Z</div><div><h1>ZARA</h1><small>OFFICE ACCOUNTING</small></div></div><div class="header-right">TRACK • MANAGE • GROW<br>Simple accounts. Clear decisions.</div></header>
+<main class="wrap">
+<div class="topline"><div><h2>Office Dashboard</h2><div class="sub" id="today"></div></div><div class="actions"><button class="light" id="exportBtn">↓ Backup</button><label class="filebtn light" for="importFile">↑ Restore</label><input id="importFile" type="file" accept="application/json" class="hidden"><button class="gold" onclick="window.print()">Print</button></div></div>
+<section class="cards">
+<div class="card"><div class="label">TOTAL CREDIT / RECEIVED</div><div class="amount green" id="creditTotal">SAR 0.00</div></div>
+<div class="card"><div class="label">TOTAL DEBIT / PAID</div><div class="amount red" id="debitTotal">SAR 0.00</div></div>
+<div class="card"><div class="label">NET BALANCE</div><div class="amount blue" id="balanceTotal">SAR 0.00</div></div>
+<div class="card"><div class="label">TRANSACTIONS</div><div class="amount" id="countTotal">0</div></div>
+</section>
+<div class="tabs">
+<button class="tab active" data-tab="transactions">Transactions</button><button class="tab" data-tab="contacts">Customers & Suppliers</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="settings">Backup & Data</button>
+</div>
+<section id="transactions" class="tabpage">
+<div class="grid2">
+<div class="panel"><h3 class="section-title">Add Transaction</h3>
+<form id="txForm">
+<div class="twocol"><div class="field"><label>TYPE</label><select id="type"><option value="credit">Credit / Received</option><option value="debit">Debit / Paid</option></select></div><div class="field"><label>DATE</label><input id="date" type="date" required></div></div>
+<div class="field"><label>PARTY / CUSTOMER</label><input id="party" list="partyList" placeholder="e.g. ABC Trading"><datalist id="partyList"></datalist></div>
+<div class="twocol"><div class="field"><label>AMOUNT</label><input id="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div><div class="field"><label>CURRENCY</label><select id="currency"><option>SAR</option><option>BDT</option><option>USD</option></select></div></div>
+<div class="field"><label>DESCRIPTION</label><input id="note" placeholder="Invoice, office rent, payment..."></div>
+<button class="primary" type="submit">＋ Save Transaction</button>
+</form></div>
+<div class="panel"><div class="topline"><h3 class="section-title">Recent Transactions</h3><input id="searchTx" placeholder="Search..." style="max-width:190px"></div>
+<div style="overflow:auto"><table><thead><tr><th>Date</th><th>Party / Details</th><th>Type</th><th class="right">Amount</th><th></th></tr></thead><tbody id="txRows"></tbody></table></div></div>
+</div></section>
+<section id="contacts" class="tabpage hidden"><div class="grid2">
+<div class="panel"><h3 class="section-title">Add Contact</h3><form id="contactForm"><div class="field"><label>NAME</label><input id="cname" required placeholder="Customer or supplier"></div><div class="field"><label>PHONE / WHATSAPP</label><input id="cphone" placeholder="+966..."></div><div class="field"><label>TYPE</label><select id="ckind"><option>Customer</option><option>Supplier</option><option>Both</option></select></div><button class="primary">＋ Save Contact</button></form></div>
+<div class="panel"><h3 class="section-title">Contacts</h3><div style="overflow:auto"><table><thead><tr><th>Name</th><th>Phone</th><th>Type</th><th></th></tr></thead><tbody id="contactRows"></tbody></table></div></div>
+</div></section>
+<section id="reports" class="tabpage hidden"><div class="panel"><h3 class="section-title">Account Summary</h3><div class="cards" style="margin:0"><div><div class="label">Credit</div><div class="amount green" id="rCredit">SAR 0.00</div></div><div><div class="label">Debit</div><div class="amount red" id="rDebit">SAR 0.00</div></div><div><div class="label">Net</div><div class="amount blue" id="rNet">SAR 0.00</div></div><div><div class="label">Entries</div><div class="amount" id="rCount">0</div></div></div><p class="muted" style="font-size:12px">Totals are grouped by currency in the transaction list. Dashboard totals use the selected display currency and do not convert between currencies.</p><div id="currencyBreakdown"></div></div></section>
+<section id="settings" class="tabpage hidden"><div class="panel"><h3 class="section-title">Your Data & Backup</h3><p>Automatic saving is enabled in this browser on this device. Make a backup regularly so you can restore your records if you change or reset your device.</p><div class="actions"><button class="primary" id="exportBtn2">Download Backup</button><label class="filebtn light" for="importFile2">Restore Backup</label><input id="importFile2" type="file" accept="application/json" class="hidden"><button class="light" id="clearBtn">Clear All Data</button></div><div class="notice"><b>Important:</b> This free starter version stores data locally in this browser. It does not sync automatically between your iPhone and MacBook, and it does not read WhatsApp chats. WhatsApp sharing opens a ready-to-send message; you choose the recipient and send it. Cloud sync and automatic WhatsApp integration can add costs and require secure setup.</div></div></section>
+<footer>ZARA • Office Accounting • Your records stay in this browser unless you export a backup.</footer>
+</main>
+<script>
+const KEY='zara_office_accounts_v1';
+let db={transactions:[],contacts:[]};
+try{db=JSON.parse(localStorage.getItem(KEY))||db}catch(e){}
+const $=id=>document.getElementById(id);
+const money=(n,c)=>`${c} ${Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function totals(){let x={};db.transactions.forEach(t=>{x[t.currency]??={credit:0,debit:0};x[t.currency][t.type]+=Number(t.amount)});return x}
+function render(){
+ const ts=totals(), cur=$('currency')?.value||'SAR', v=ts[cur]||{credit:0,debit:0};
+ $('creditTotal').textContent=money(v.credit,cur);$('debitTotal').textContent=money(v.debit,cur);$('balanceTotal').textContent=money(v.credit-v.debit,cur);$('countTotal').textContent=db.transactions.length;
+ $('rCredit').textContent=money(v.credit,cur);$('rDebit').textContent=money(v.debit,cur);$('rNet').textContent=money(v.credit-v.debit,cur);$('rCount').textContent=db.transactions.length;
+ $('currencyBreakdown').innerHTML=Object.entries(ts).map(([c,a])=>`<p><b>${c}</b> — Credit: <span class="green">${money(a.credit,c)}</span> &nbsp; Debit: <span class="red">${money(a.debit,c)}</span> &nbsp; Net: ${money(a.credit-a.debit,c)}</p>`).join('')||'<p class="empty">No transactions yet.</p>';
+ const q=($('searchTx').value||'').toLowerCase();
+ const arr=[...db.transactions].sort((a,b)=>b.date.localeCompare(a.date)).filter(t=>(t.party+' '+t.note+' '+t.type).toLowerCase().includes(q));
+ $('txRows').innerHTML=arr.map(t=>`<tr><td>${esc(t.date)}</td><td><b>${esc(t.party||'—')}</b><br><span class="muted">${esc(t.note||'')}</span></td><td><span class="pill ${t.type==='debit'?'debit':''}">${t.type==='credit'?'Credit':'Debit'}</span></td><td class="right ${t.type==='credit'?'green':'red'}">${t.type==='credit'?'+':'−'}${money(t.amount,t.currency)}</td><td><button class="smallbtn light" onclick="shareTx('${t.id}')">WhatsApp</button> <button class="smallbtn light" onclick="delTx('${t.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan="5" class="empty">No transactions found.</td></tr>';
+ $('contactRows').innerHTML=db.contacts.map(c=>`<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.phone||'—')}</td><td>${esc(c.kind)}</td><td>${c.phone?`<button class="smallbtn light" onclick="shareContact('${c.id}')">WhatsApp</button>`:''} <button class="smallbtn light" onclick="delContact('${c.id}')">×</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty">No contacts yet.</td></tr>';
+ $('partyList').innerHTML=db.contacts.map(c=>`<option value="${esc(c.name)}">`).join('');
+}
+function exportData(){const blob=new Blob([JSON.stringify({...db,exportedAt:new Date().toISOString(),app:'ZARA'},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ZARA-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)}
+function importFile(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.transactions)||!Array.isArray(d.contacts))throw Error();if(confirm('Restore this backup? Current records will be replaced.')){db={transactions:d.transactions,contacts:d.contacts};save();alert('Backup restored.')}}catch(e){alert('This backup file is not valid.')}};r.readAsText(file)}
+function delTx(id){if(confirm('Delete this transaction?')){db.transactions=db.transactions.filter(t=>t.id!==id);save()}}
+function delContact(id){if(confirm('Delete this contact?')){db.contacts=db.contacts.filter(c=>c.id!==id);save()}}
+function wa(text,phone=''){const url='https://wa.me/'+phone.replace(/\D/g,'')+'?text='+encodeURIComponent(text);window.open(url,'_blank')}
+function shareTx(id){const t=db.transactions.find(x=>x.id===id);wa(`ZARA ACCOUNT STATEMENT\nDate: ${t.date}\nParty: ${t.party}\nType: ${t.type.toUpperCase()}\nAmount: ${money(t.amount,t.currency)}\nDetails: ${t.note||'-'}`)}
+function shareContact(id){const c=db.contacts.find(x=>x.id===id);wa(`Hello ${c.name},\nThis is a message from our office.\n— ZARA`,c.phone)}
+$('today').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+$('date').value=new Date().toISOString().slice(0,10);
+$('txForm').addEventListener('submit',e=>{e.preventDefault();db.transactions.push({id:crypto.randomUUID(),type:$('type').value,date:$('date').value,party:$('party').value.trim(),amount:Number($('amount').value),currency:$('currency').value,note:$('note').value.trim()});e.target.reset();$('date').value=new Date().toISOString().slice(0,10);save()});
+$('contactForm').addEventListener('submit',e=>{e.preventDefault();db.contacts.push({id:crypto.randomUUID(),name:$('cname').value.trim(),phone:$('cphone').value.trim(),kind:$('ckind').value});e.target.reset();save()});
+$('searchTx').addEventListener('input',render);$('currency').addEventListener('change',render);
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tabpage').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab))}));
+$('exportBtn').onclick=$('exportBtn2').onclick=exportData;
+$('importFile').onchange=e=>importFile(e.target.files[0]);$('importFile2').onchange=e=>importFile(e.target.files[0]);
+$('clearBtn').onclick=()=>{if(confirm('Permanently clear all ZARA records in this browser? Export a backup first if needed.')){db={transactions:[],contacts:[]};save()}};
+render();
+</script>
+<script>if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));</script></body></html>
